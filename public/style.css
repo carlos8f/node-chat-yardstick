@@ -7,7 +7,7 @@ body {
 #nick {
   width: 200px;
 }
-#lines {
+#lines, #nicknames {
   height: 600px;
   overflow: auto;
 }

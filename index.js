@@ -40,7 +40,9 @@ io.sockets.on('connection', function (socket) {
       fn(false);
       nicknames[nick] = socket.nickname = nick;
       socket.broadcast.emit('announcement', nick + ' connected');
-      io.sockets.emit('nicknames', nicknames);
+      var names = Object.keys(nicknames);
+      names.sort();
+      io.sockets.emit('nicknames', names);
     }
   });
 
