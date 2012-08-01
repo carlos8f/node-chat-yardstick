@@ -31,6 +31,7 @@ socket.on('error', function (e) {
 
 function message (from, msg) {
   $('#lines').append($('<p>').append($('<b>').text(from), msg));
+  $('#lines').get(0).scrollTop = 10000000;
 }
 
 // dom manipulation
@@ -61,7 +62,6 @@ $(function() {
     message('me', $('#message').val());
     socket.emit('user message', $('#message').val());
     clear();
-    $('#lines').get(0).scrollTop = 10000000;
     return false;
   });
 
