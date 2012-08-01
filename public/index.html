@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>chat-yardstick (socket.io)</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="main">
+      <div class="container">
+        <div class="row-fluid">
+          <div class="span12">
+            <header class="jumbotron subhead">
+              <h1>chat-yardstick (socket.io)</h1>
+              <p class="lead">Test scalability of simple chat program using various socket backends</p>
+              <a id="login" data-toggle="modal" href="#nickname" class="btn btn-primary btn-large">Choose a nickname</a>
+            </header>
+          </div>
+
+          <div id="nickname" class="modal hide fade" style="display: none; ">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3>Enter your nickname</h3>
+            </div>
+            <div class="modal-body">
+              <form id="set-nickname">
+                <fieldset class="control-group">
+                  <div class="input-append">
+                    <input class="span2" size="50" type="text" id="nick"><input type="submit" class="btn" value="Enter chat">
+                    <span id="nickname-err" class="hide help-inline">Nickname already taken.</span>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+
+          <div id="messages" class="hide">
+            <div class="span8 well" id="lines"></div>
+            <div class="span4 well" id="nicknames"></div>
+          </div>
+
+          <form id="send-message" class="form-horizontal hide">
+            <fieldset class="control-group well">
+              <label class="control-label" for="message"><b><span id="nick-display"></span></b></label>
+              <div class="controls">
+                <div class="input-append">
+                  <input class="span2" size="50" type="text" id="message"><input type="submit" class="btn" value="Send">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+  </body>
+</html>

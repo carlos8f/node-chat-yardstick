@@ -1,0 +1,20 @@
+{
+  "author": "Carlos Rodriguez <carlos@s8f.org> (http://s8f.org/)",
+  "name": "chat-yardstick",
+  "description": "Test scalability of simple chat program using various socket backends",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carlos8f/node-chat-yardstick.git"
+  },
+  "dependencies": {
+    "buffet": "~0.3.5",
+    "socket.io": "git+ssh://git@github.com:cantina/socket.io.git#client-at-master",
+    "optimist": "~0.3.4"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
