@@ -4,7 +4,7 @@
   "description": "Test scalability of simple chat program using various socket backends",
   "version": "0.0.0",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "NODE_ENV=production node ./index.js"
   },
   "repository": {
     "type": "git",
