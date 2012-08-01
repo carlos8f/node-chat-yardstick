@@ -18,7 +18,6 @@ socket.on('nicknames', function (nicknames) {
 
 socket.on('user message', message);
 socket.on('reconnect', function () {
-  $('#lines').remove();
   message('System', 'Reconnected to the server');
 });
 
