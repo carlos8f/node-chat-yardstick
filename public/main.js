@@ -34,7 +34,7 @@ function message (from, msg) {
 }
 
 // dom manipulation
-$(function () {
+$(function() {
   $('#nickname').on('hidden', function() {
     $('#set-nickname fieldset').removeClass('error');
     $('#nickname-err').addClass('hide');
@@ -44,12 +44,12 @@ $(function () {
     var nick = $('#nick').val();
     socket.emit('nickname', nick, function(set) {
       if (!set) {
-        $('#login').css('display', 'none');
+        $('#set-nickname').css('display', 'none');
         $('#send-message').removeClass('hide');
         $('#messages').removeClass('hide');
         clear();
         $('#nick-display').text(nick);
-        return $('#chat').addClass('nickname-set');
+        return;
       }
       $('#set-nickname fieldset').addClass('error');
       $('#nickname-err').removeClass('hide');
@@ -57,7 +57,7 @@ $(function () {
     return false;
   });
 
-  $('#send-message').submit(function () {
+  $('#send-message').submit(function() {
     message('me', $('#message').val());
     socket.emit('user message', $('#message').val());
     clear();
@@ -65,8 +65,7 @@ $(function () {
     return false;
   });
 
-  function clear () {
-    $('#nickname').modal('hide');
+  function clear() {
     $('#message').val('').focus();
   };
 });

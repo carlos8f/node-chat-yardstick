@@ -17,6 +17,15 @@ var io = socketio.listen(server, {
   transports: ['xhr-polling']
 });
 
+io.configure(function() {
+  io.set('log level', 2); // info
+  io.set('polling duration', 45);
+  io.set('close timeout', 55);
+});
+io.configure('production', function() {
+  io.set('log level', 0); // error
+});
+
 var nicknames = {};
 
 io.sockets.on('connection', function (socket) {
