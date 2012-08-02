@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "buffet": "~0.3.5",
-    "socket.io": "git+ssh://git@github.com:cantina/socket.io.git#client-at-master",
-    "optimist": "~0.3.4"
+    "optimist": "~0.3.4",
+    "engine.io": "~0.1.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
