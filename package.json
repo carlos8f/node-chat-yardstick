@@ -11,10 +11,9 @@
     "url": "git://github.com/carlos8f/node-chat-yardstick.git"
   },
   "dependencies": {
-    "buffet": "~0.3.5",
-    "optimist": "~0.3.4",
-    "engine.io": "~0.1.1",
-    "engine.io-client": "~0.1.1"
+    "oil": "~0.0.2",
+    "buffet": "~0.3.6",
+    "optimist": "~0.3.4"
   },
   "devDependencies": {},
   "optionalDependencies": {},

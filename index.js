@@ -1,16 +1,13 @@
 var http = require('http')
-  , engine = require('engine.io')
+  , engine = require('oil')
   , argv = require('optimist')
     .alias('p', 'port')
     .default('port', 3000)
     .argv
-  , fs = require('fs')
   , path = require('path')
   , pub = path.resolve(__dirname, './public')
-  , EventEmitter = require('events').EventEmitter
   ;
 
-fs.writeFileSync(path.join(pub, 'engine.io.js'), fs.readFileSync(path.resolve(__dirname, './node_modules/engine.io-client/dist/engine.io.js')));
 var buffet = require('buffet')(pub);
 
 var server = http.createServer(function(req, res) {
@@ -20,60 +17,55 @@ var server = http.createServer(function(req, res) {
 });
 
 var io = engine.attach(server);
-
-io.emitAll = function(name) {
-  var args = Array.prototype.slice.call(arguments);
-  Object.keys(io.clients).forEach(function(id) {
-    io.clients[id].sendData.apply(io.clients[id], args);
-  });
-};
 var nicknames = {};
-
 io.on('connection', function(socket) {
-  socket.sendData = function(name) {
-    data = Array.prototype.slice.call(arguments, 1);
-    socket.send(JSON.stringify({name: name, data: data}));
-  };
-  socket.broadcast = function(name) {
-    var args = Array.prototype.slice.call(arguments);
-    Object.keys(io.clients).forEach(function(id) {
-      if (id === socket.id) return;
-      io.clients[id].sendData.apply(io.clients[id], args);
-    });
-  };
-  socket.on('message', function(msg) {
-    var unpacked = JSON.parse(msg);
-    if (unpacked.name) {
-      socket.emit.apply(socket, [unpacked.name].concat(unpacked.data));
-    }
-  });
-  socket.on('user message', function(msg) {
-    socket.broadcast('user message', socket.nickname, msg);
+  socket.oil.on('user message', function(msg) {
+    socket.oil.broadcast('user message', nicknames[socket.id], msg);
   });
 
-  socket.on('nickname', function(nick) {
-    if (!nick || nick === '' || nicknames[nick]) {
-      socket.sendData('nickname', true);
+  socket.oil.on('nickname', function(nick) {
+    if (nicknameTaken(socket.id, nick)) {
+      socket.oil.send('nickname', true);
     }
     else {
-      socket.sendData('nickname', false);
-      nicknames[nick] = socket.nickname = nick;
-      socket.broadcast('announcement', nick + ' connected');
-      var names = Object.keys(nicknames);
-      names.sort();
-      io.emitAll('nicknames', names);
+      socket.oil.send('nickname', false);
+      nicknames[socket.id] = nick;
+      socket.oil.broadcast('announcement', nick + ' connected');
+      sendNicks();
     }
   });
 
   socket.on('close', function () {
-    if (!socket.nickname) return;
+    if (!nicknames[socket.id]) return;
 
-    delete nicknames[socket.nickname];
-    socket.broadcast('announcement', socket.nickname + ' disconnected');
-    io.emitAll('nicknames', nicknames);
+    socket.oil.broadcast('announcement', nicknames[socket.id] + ' disconnected');
+    delete nicknames[socket.id];
+    sendNicks();
   });
 
   socket.on('error', function(err) {
     console.error(err);
   });
 });
+
+function nicknameTaken(id, nick) {
+  if (!nick || nick === '' || nicknames[id]) {
+    return true;
+  }
+  var taken = false;
+  Object.keys(nicknames).forEach(function(socketId) {
+    if (nicknames[socketId] === nick) {
+      taken = true;
+    }
+  });
+  return taken;
+}
+
+function sendNicks() {
+  var nicks = [];
+  Object.keys(nicknames).forEach(function(id) {
+    nicks.push(nicknames[id]);
+  });
+  nicks.sort();
+  io.oil.send('nicknames', nicks);
+}
