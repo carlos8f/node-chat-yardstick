@@ -11,6 +11,8 @@
     "url": "git://github.com/carlos8f/node-chat-yardstick.git"
   },
   "dependencies": {
+    "architect": "~0.1.4",
+    "middler": "~0.1.0",
     "oil": "~0.3.6",
     "buffet": "~0.3.6",
     "optimist": "~0.3.4"

@@ -1,0 +1,11 @@
+{
+  "name": "nicknames",
+  "version": "0.0.1",
+  "main": "nicknames.js",
+  "private": true,
+
+  "plugin": {
+    "consumes": ["io"],
+    "provides": ["nicknames"]
+  }
+}

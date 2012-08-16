@@ -1,4 +1,4 @@
-var client = new oil.Client({port: 3000});
+var client = new oil.Client({hostname: window.location.hostname, port: window.location.port});
 
 client.on('connect', function() {
   message('System', 'Connected to the server');

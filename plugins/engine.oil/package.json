@@ -1,0 +1,11 @@
+{
+  "name": "engine.oil",
+  "version": "0.0.1",
+  "main": "oil.js",
+  "private": true,
+
+  "plugin": {
+    "consumes": ["http"],
+    "provides": ["io"]
+  }
+}

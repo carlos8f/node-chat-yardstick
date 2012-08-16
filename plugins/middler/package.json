@@ -1,0 +1,11 @@
+{
+  "name": "middler",
+  "version": "0.0.1",
+  "main": "middler.js",
+  "private": true,
+
+  "plugin": {
+    "consumes": ["http"],
+    "provides": ["middler"]
+  }
+}
