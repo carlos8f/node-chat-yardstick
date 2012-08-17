@@ -8,7 +8,7 @@ function Client(options) {
   this.connect();
 }
 Client.prototype.connect = function() {
-  this.socket = new eio.Socket({port: this.port});
+  this.socket = new eio.Socket({host: document.domain, port: document.location.port, transports: ['polling'], upgrade: false});
   var self = this;
   this.socket.on('open', function() {
     self.connected = true;
@@ -22,11 +22,13 @@ Client.prototype.connect = function() {
     }
     self.connected = false;
     if (reason !== 'forced close') {
+      /*
       self.activeReconnectTimeout *= self.reconnectBackoff;
       setTimeout(function() {
         self.onReconnecting();
         self.connect();
       }, self.activeReconnectTimeout);
+     */
     }
   });
   this.socket.on('error', function(err) {
@@ -78,7 +80,7 @@ Client.prototype.onNickname = function(set) {
   $('#nickname-err').removeClass('hide');
 };
 
-var client = new Client({port: 3000});
+var client = new Client();
 
 function message(from, msg) {
   $('#lines').append($('<p>').append($('<b>').text(from), msg));

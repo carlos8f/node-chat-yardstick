@@ -19,7 +19,7 @@ var server = http.createServer(function(req, res) {
   console.log('test server running on port ' + argv.port);
 });
 
-var io = engine.attach(server);
+var io = engine.attach(server, {allowUpgrades: false, transports: ['polling']});
 
 io.emitAll = function(name) {
   var args = Array.prototype.slice.call(arguments);
