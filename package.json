@@ -14,7 +14,8 @@
     "buffet": "~0.3.5",
     "optimist": "~0.3.4",
     "engine.io": "~0.2.1",
-    "engine.io-client": "~0.2.1"
+    "engine.io-client": "~0.2.1",
+    "middler": "~0.1.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},

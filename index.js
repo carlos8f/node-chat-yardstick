@@ -8,18 +8,20 @@ var http = require('http')
   , path = require('path')
   , pub = path.resolve(__dirname, './public')
   , EventEmitter = require('events').EventEmitter
+  , middler = require('middler')
   ;
 
 fs.writeFileSync(path.join(pub, 'engine.io.js'), fs.readFileSync(path.resolve(__dirname, './node_modules/engine.io-client/dist/engine.io.js')));
 var buffet = require('buffet')(pub);
 
-var server = http.createServer(function(req, res) {
-  buffet(req, res, buffet.notFound.bind(null, req, res));
-}).listen(argv.port, function() {
+var server = http.createServer();
+middler(server, buffet);
+middler(server, buffet.notFound);
+var io = engine.attach(server, {transports: ['polling'], allowUpgrades: false});
+
+server.listen(argv.port, function() {
   console.log('test server running on port ' + argv.port);
 });
-
-var io = engine.attach(server, {allowUpgrades: false, transports: ['polling']});
 
 io.emitAll = function(name) {
   var args = Array.prototype.slice.call(arguments);
