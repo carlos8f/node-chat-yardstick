@@ -9,14 +9,16 @@ var http = require('http')
   , pub = path.resolve(__dirname, './public')
   , EventEmitter = require('events').EventEmitter
   , middler = require('middler')
-  ;
 
 fs.writeFileSync(path.join(pub, 'engine.io.js'), fs.readFileSync(path.resolve(__dirname, './node_modules/engine.io-client/dist/engine.io.js')));
 var buffet = require('buffet')(pub);
 
 var server = http.createServer();
-middler(server, buffet);
-middler(server, buffet.notFound);
+middler()
+  .add(buffet)
+  .add(buffet.notFound)
+  .attach(server);
+
 var io = engine.attach(server, {transports: ['polling'], allowUpgrades: false});
 
 server.listen(argv.port, function() {
